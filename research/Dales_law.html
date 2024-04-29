@@ -57,7 +57,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/headphone-logo.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Analysing Dale’s law and distribution of excitatory and inhibitory neurons" href="Dales_Law_Follow_Up.html" />
+    <link rel="next" title="Compute hessians (jax version)" href="Compute%20hessians%20%28jax%20version%29.html" />
     <link rel="prev" title="Dynamic threshold" href="Dynamic_threshold.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -146,8 +146,13 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Optimizing-Membrane-Time-Constant.html">
-   Improving Performance: Optimizing the membrane time constant
+  <a class="reference internal" href="Quick_Start_250HzClassification_CleanVersion.html">
+   Quick Start Notebook with 250 Hz input
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Quick_Start_250HzClassification.html">
+   Quick Start Notebook with 250 Hz input
   </a>
  </li>
  <li class="toctree-l1">
@@ -156,13 +161,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Optimizing-Membrane-Time-Constant.html">
+   Improving Performance: Optimizing the membrane time constant
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Noise_robustness.html">
+   Robustness to Noise and Dropout
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Learning_delays_major_edit2.html">
    Learning delays
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Filter-and-Fire_Neuron_Model_SNN.html">
-   Filter-and-Fire Neuron Model
+  <a class="reference internal" href="IE-neuron-distribution.html">
+   Analysing Dale’s law and distribution of excitatory and inhibitory neurons
   </a>
  </li>
  <li class="toctree-l1">
@@ -181,13 +196,13 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Dales_Law_Follow_Up.html">
-   Analysing Dale’s law and distribution of excitatory and inhibitory neurons
+  <a class="reference internal" href="Compute%20hessians%20%28jax%20version%29.html">
+   Compute hessians (jax version)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Compute%20hessians%20%28jax%20version%29.html">
-   Compute hessians (jax version)
+  <a class="reference internal" href="Dales_Law_Follow_Up.html">
+   Analysing Dale’s law and distribution of excitatory and inhibitory neurons
   </a>
  </li>
  <li class="toctree-l1">
@@ -203,6 +218,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="Altering_output_neurons.html">
    Altering Output Neurons
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Alt-Filter-and-Fire_Neuron_Model_SNN.html">
+   Filter-and-Fire Neuron Model
   </a>
  </li>
 </ul>
@@ -334,6 +354,11 @@ const thebe_selector_output = ".output, .cell_output"
        Seems like 40-60 ratio is best !
       </a>
      </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#testing-where-inhibition-is-required">
+       Testing where inhibition is required
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h2 nav-item toc-entry">
@@ -398,6 +423,11 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#seems-like-40-60-ratio-is-best">
        Seems like 40-60 ratio is best !
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#testing-where-inhibition-is-required">
+       Testing where inhibition is required
       </a>
      </li>
     </ul>
@@ -630,7 +660,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <span class="k">def</span> <span class="nf">analyse_accuracy</span><span class="p">(</span><span class="n">ipds</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
     <span class="n">ipd_true</span><span class="p">,</span> <span class="n">ipd_est</span><span class="p">,</span> <span class="n">confusion</span><span class="p">,</span> <span class="n">accs</span> <span class="o">=</span> <span class="n">test_accuracy</span><span class="p">(</span><span class="n">ipds</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
-    <span class="n">report_accuracy</span><span class="p">(</span><span class="n">ipd_true</span><span class="p">,</span> <span class="n">ipd_est</span><span class="p">,</span> <span class="n">confusion</span><span class="p">,</span> <span class="n">accs</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+    <span class="c1">#report_accuracy(ipd_true, ipd_est, confusion, accs, label)</span>
     <span class="k">return</span> <span class="mi">100</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">accs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -720,26 +750,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">get_dales_mask</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">.6</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f232836f220&gt;
-</pre></div>
-</div>
-<img alt="../_images/Dales_law_9_1.png" src="../_images/Dales_law_9_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># noinspection PyProtectedMember</span>
 
 <span class="k">def</span> <span class="nf">get_dales_mask</span><span class="p">(</span><span class="n">nb_inputs</span><span class="p">,</span> <span class="n">nb_out</span><span class="p">,</span> <span class="n">ie_ratio</span><span class="p">)</span> <span class="p">:</span> 
 
     <span class="n">d_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">nb_inputs</span><span class="p">,</span> <span class="n">nb_out</span><span class="p">)</span>
-    <span class="c1">#inhib_units = np.random.choice(nb_inputs, int(nb_inputs*ie_ratio), replace=False)</span>
-    <span class="n">inhib_units</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ie_ratio</span><span class="o">*</span><span class="n">nb_inputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">inhib_units</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">nb_inputs</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">nb_inputs</span><span class="o">*</span><span class="n">ie_ratio</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># inhib_units = torch.arange(ie_ratio*nb_inputs, dtype=int)</span>
     <span class="c1">#print(self.inhib_units)</span>
     <span class="n">d_mask</span><span class="p">[</span><span class="n">inhib_units</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">d_mask</span>
@@ -846,7 +863,7 @@ const thebe_selector_output = ".output, .cell_output"
     <span class="n">best_loss</span> <span class="o">=</span> <span class="mf">1e10</span>
     <span class="n">val_loss_best_loss</span> <span class="o">=</span> <span class="mf">1e10</span>
 
-    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
         <span class="n">local_loss</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">x_local</span><span class="p">,</span> <span class="n">y_local</span> <span class="ow">in</span> <span class="n">data_generator</span><span class="p">(</span><span class="n">discretise</span><span class="p">(</span><span class="n">ipds</span><span class="p">),</span> <span class="n">spikes</span><span class="p">):</span>
             <span class="c1"># Run network</span>
@@ -894,15 +911,15 @@ const thebe_selector_output = ".output, .cell_output"
           <span class="k">return</span> <span class="n">best_weights</span>
 
     <span class="c1"># Plot the loss function over time</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_hist</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># plt.plot(loss_hist)</span>
+    <span class="c1"># plt.xlabel(&#39;Epoch&#39;)</span>
+    <span class="c1"># plt.ylabel(&#39;Loss&#39;)</span>
+    <span class="c1"># plt.tight_layout()</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">val_loss_hist</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="c1"># plt.plot(val_loss_hist)</span>
+    <span class="c1"># plt.xlabel(&#39;Epoch&#39;)</span>
+    <span class="c1"># plt.ylabel(&#39;Loss&#39;)</span>
+    <span class="c1"># plt.tight_layout()</span>
 
     <span class="k">return</span> <span class="n">get_signed_weights</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">signs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">get_signed_weights</span><span class="p">(</span><span class="n">w2</span><span class="p">,</span> <span class="n">signs</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">signs</span>
 </pre></div>
@@ -912,7 +929,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate the training data</span>
-<span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">init_weight_matrices</span><span class="p">(</span><span class="n">ie_ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">init_weight_matrices</span><span class="p">(</span><span class="n">ie_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
 <span class="n">ipds_training</span><span class="p">,</span> <span class="n">spikes_training</span> <span class="o">=</span> <span class="n">random_ipd_input_signal</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
 <span class="n">ipds_validation</span><span class="p">,</span> <span class="n">spikes_validation</span> <span class="o">=</span> <span class="n">random_ipd_input_signal</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
@@ -947,19 +964,11 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chance accuracy level: 8.3%
-
-Train classifier accuracy: 76.0%
-Train absolute error: 5.6 deg
-
-Test classifier accuracy: 67.5%
-Test absolute error: 6.3 deg
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>67.48046875
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>79.78515625
 </pre></div>
 </div>
-<img alt="../_images/Dales_law_15_2.png" src="../_images/Dales_law_15_2.png" />
-<img alt="../_images/Dales_law_15_3.png" src="../_images/Dales_law_15_3.png" />
 </div>
 </div>
 </div>
@@ -974,12 +983,12 @@ Test absolute error: 6.3 deg
 <span class="n">train_losses</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">test_losses</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">n_tests</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">n_tests</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)):</span>
     <span class="n">train_losses</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
     <span class="n">test_losses</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
-    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tests</span><span class="p">)</span> <span class="p">:</span> 
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_tests</span><span class="p">):</span> 
 
         <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">init_weight_matrices</span><span class="p">(</span><span class="n">ie_ratio</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="mf">0.1</span><span class="p">)</span>
         <span class="n">w1_trained</span><span class="p">,</span> <span class="n">w2_trained</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">signs</span><span class="p">,</span> <span class="n">ipds_training</span><span class="p">,</span> <span class="n">spikes_training</span><span class="p">,</span> <span class="n">ipds_validation</span><span class="p">,</span> <span class="n">spikes_validation</span><span class="p">)</span>
@@ -994,6 +1003,16 @@ Test absolute error: 6.3 deg
         <span class="n">test_losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_loss</span><span class="p">)</span>
 
 <span class="n">train_losses</span><span class="p">,</span> <span class="n">test_losses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_losses</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_losses</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "b9fe1b3963824e56a682942f45839fc0", "version_major": 2, "version_minor": 0}
+</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Early Stop !
+Early Stop !
+Early Stop !
+Early Stop !
 </pre></div>
 </div>
 </div>
@@ -1013,7 +1032,7 @@ Test absolute error: 6.3 deg
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Dales_law_19_0.png" src="../_images/Dales_law_19_0.png" />
+<img alt="../_images/Dales_law_18_0.png" src="../_images/Dales_law_18_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1030,11 +1049,77 @@ Test absolute error: 6.3 deg
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Dales_law_20_0.png" src="../_images/Dales_law_20_0.png" />
+<img alt="../_images/Dales_law_19_0.png" src="../_images/Dales_law_19_0.png" />
 </div>
 </div>
 <div class="section" id="seems-like-40-60-ratio-is-best">
 <h3>Seems like 40-60 ratio is best !<a class="headerlink" href="#seems-like-40-60-ratio-is-best" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="testing-where-inhibition-is-required">
+<h3>Testing where inhibition is required<a class="headerlink" href="#testing-where-inhibition-is-required" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate data</span>
+<span class="n">ipds_training</span><span class="p">,</span> <span class="n">spikes_training</span> <span class="o">=</span> <span class="n">random_ipd_input_signal</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="n">ipds_validation</span><span class="p">,</span> <span class="n">spikes_validation</span> <span class="o">=</span> <span class="n">random_ipd_input_signal</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="n">ipds_test</span><span class="p">,</span> <span class="n">spikes_test</span> <span class="o">=</span> <span class="n">random_ipd_input_signal</span><span class="p">(</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_testing_batches</span><span class="p">)</span>
+
+<span class="n">repeats</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)):</span> 
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeats</span><span class="p">):</span> 
+        <span class="c1"># Set weight matrix </span>
+        <span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">init_weight_matrices</span><span class="p">(</span><span class="n">ie_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">c</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> 
+            <span class="n">signs</span><span class="p">[</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">signs</span><span class="p">[</span><span class="n">c</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># enforce positive weights</span>
+
+        <span class="c1"># Train</span>
+        <span class="n">w1_trained</span><span class="p">,</span> <span class="n">w2_trained</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">w1</span><span class="p">,</span> <span class="n">w2</span><span class="p">,</span> <span class="n">signs</span><span class="p">,</span> <span class="n">ipds_training</span><span class="p">,</span> <span class="n">spikes_training</span><span class="p">,</span> <span class="n">ipds_validation</span><span class="p">,</span> <span class="n">spikes_validation</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">analyse_accuracy</span><span class="p">(</span><span class="n">ipds_test</span><span class="p">,</span> <span class="n">spikes_test</span><span class="p">,</span> <span class="n">run_func</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0e17ec8df67b4fbb85ae8d0c1a613edf", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Figure </span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">i</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;+/-&#39;</span><span class="p">,</span> <span class="s1">&#39;W1+&#39;</span><span class="p">,</span> <span class="s1">&#39;W2+&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>([&lt;matplotlib.axis.XTick at 0x210aa4cded0&gt;,
+  &lt;matplotlib.axis.XTick at 0x210aa4cde40&gt;,
+  &lt;matplotlib.axis.XTick at 0x210a91bbeb0&gt;],
+ [Text(0, 0, &#39;+/-&#39;), Text(1, 0, &#39;W1+&#39;), Text(2, 0, &#39;W2+&#39;)])
+</pre></div>
+</div>
+<img alt="../_images/Dales_law_23_1.png" src="../_images/Dales_law_23_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[65.283203125, 73.681640625, 74.51171875], [44.53125, 54.248046875, 49.70703125], [63.037109375, 72.802734375, 70.263671875]]
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="future-work">
@@ -1077,28 +1162,10 @@ Test absolute error: 6.3 deg
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">w2_trained</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
 </pre></div>
 </div>
 </div>
@@ -1131,15 +1198,6 @@ Test absolute error: 6.3 deg
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1166,7 +1224,7 @@ Test absolute error: 6.3 deg
     <span class="n">best_loss</span> <span class="o">=</span> <span class="mf">1e10</span>
     <span class="n">val_loss_best_loss</span> <span class="o">=</span> <span class="mf">1e10</span>
 
-    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">N_EPOCHS</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_EPOCHS</span><span class="p">):</span>
         <span class="n">local_loss</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">x_local</span><span class="p">,</span> <span class="n">y_local</span> <span class="ow">in</span> <span class="n">data_generator</span><span class="p">(</span><span class="n">discretise</span><span class="p">(</span><span class="n">ipds</span><span class="p">),</span> <span class="n">spikes</span><span class="p">):</span>
             <span class="c1"># Run network</span>
@@ -1235,15 +1293,6 @@ Test absolute error: 6.3 deg
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1254,15 +1303,6 @@ Test absolute error: 6.3 deg
 
 <span class="n">ipds_test</span><span class="p">,</span> <span class="n">spikes_test</span> <span class="o">=</span> <span class="n">random_ipd_input_signal</span><span class="p">(</span><span class="n">batch_size</span><span class="o">*</span><span class="n">n_testing_batches</span><span class="p">)</span>
 <span class="n">analyse_accuracy</span><span class="p">(</span><span class="n">ipds_test</span><span class="p">,</span> <span class="n">spikes_test</span><span class="p">,</span> <span class="n">run_func</span><span class="p">,</span> <span class="s1">&#39;Test&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
 </pre></div>
 </div>
 </div>
@@ -1330,15 +1370,6 @@ Test absolute error: 6.3 deg
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Phase delay (deg)&#39;</span><span class="p">)</span>
 
 <span class="n">plot_weight_mats_sorted</span><span class="p">(</span><span class="n">w1_trained</span><span class="p">,</span> <span class="n">w2_trained</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
 </pre></div>
 </div>
 </div>
@@ -1419,15 +1450,6 @@ Test absolute error: 6.3 deg
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="n">Running</span> <span class="n">cells</span> <span class="k">with</span> <span class="s1">&#39;Python 3.7.0 (&#39;</span><span class="n">base</span><span class="s1">&#39;)&#39;</span> <span class="n">requires</span> <span class="n">ipykernel</span> <span class="n">package</span><span class="o">.</span>
-
-<span class="n">Run</span> <span class="n">the</span> <span class="n">following</span> <span class="n">command</span> <span class="n">to</span> <span class="n">install</span> <span class="s1">&#39;ipykernel&#39;</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Python</span> <span class="n">environment</span><span class="o">.</span> 
-
-<span class="ne">Command</span>: &#39;conda install -n base ipykernel --update-deps --force-reinstall&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <p>Looking a bit at membrane traces of the output neurions, it seems like the decision is taken mostly in the trough of the sinusoid input, probably because in that period the FRs are low enough that coincidence is more significative for the discrimination.</p>
 <div class="section" id="further-work">
@@ -1474,10 +1496,10 @@ Created in <span style='font-weight:600;margin-left:4px;'>Deepnote</span></a></d
             <p class="prev-next-title">Dynamic threshold</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="Dales_Law_Follow_Up.html" title="next page">
+    <a class='right-next' id="next-link" href="Compute%20hessians%20%28jax%20version%29.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Analysing Dale’s law and distribution of excitatory and inhibitory neurons</p>
+        <p class="prev-next-title">Compute hessians (jax version)</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
